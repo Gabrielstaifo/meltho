@@ -55,6 +55,9 @@ A broken build must fail loudly with a clear message (see §6 validation).
 ├── package.json
 ├── tsconfig.json
 ├── astro.config.mjs
+├── assets/
+│   ├── screenshots/             # screenshots used by the README
+│   └── syriac-fonts/            # source Meltho TTFs + MELTHO-LICENSE.txt
 ├── public/
 │   ├── fonts/                   # self-hosted Amiri + Meltho Syriac fonts (woff2)
 │   ├── favicon.svg

@@ -150,6 +150,7 @@ summary_ar: ملخص قصير في سطر أو سطرين.
 ├── tsconfig.json
 ├── astro.config.mjs
 ├── assets/
+│   ├── screenshots/             # لقطات الموقع المدرجة في README
 │   └── syriac-fonts/            # خطوط Meltho السريانية المصدرية (ttf) + ملف ترخيصها
 ├── public/
 │   ├── fonts/                   # الخطوط المستضافة ذاتياً بصيغة woff2 (Amiri وخطوط Meltho)
