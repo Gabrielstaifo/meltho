@@ -67,7 +67,7 @@ test('groupByTag: unknown tags are skipped', () => {
 test('groupByTag: arabic labels come from the registry', () => {
   const groups = groupByTag([article('sample', ['christmas'])]);
 
-  assert.equal(groups[0].tag.label_ar, 'الميلاد');
+  assert.equal(groups[0].tag.label_ar, 'عيد الميلاد');
 });
 
 test('groupByTag: articles with no tags produce no groups', () => {

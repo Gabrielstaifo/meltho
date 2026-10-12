@@ -22,6 +22,18 @@ export const fathers = {
   sample: {
     name_ar: 'اسم الأب (نموذج)',
   },
+  ephrem: {
+    name_ar: 'مار أفرام',
+  },
+  philoxenus: {
+    name_ar: 'مار فيلكسينوس المنبجي',
+  },
+  severus: {
+    name_ar: 'مار سويريوس الكبير',
+  },
+  'jacob-serugh': {
+    name_ar: 'مار يعقوب السروجي',
+  },
 } as const satisfies Record<string, Father>;
 
 export type FatherSlug = keyof typeof fathers;

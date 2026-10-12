@@ -18,7 +18,8 @@ export const tags = {
   sample: { label_ar: 'نموذج' },
   prayer: { label_ar: 'الصلاة' },
   fast: { label_ar: 'الصوم' },
-  christmas: { label_ar: 'الميلاد' },
+  christmas: { label_ar: 'عيد الميلاد' },
+  repentance: { label_ar: 'التوبة' },
 } as const satisfies Record<string, Tag>;
 
 export type TagSlug = keyof typeof tags;
