@@ -1,0 +1,30 @@
+---
+import type { Article } from '../lib/articles.ts';
+import { isoDate } from '../lib/articles.ts';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const { translator, reviewer, source, translation_date } = article.data;
+---
+
+<footer class="article-meta">
+  <dl>
+    <dt>المترجم</dt>
+    <dd>{translator}</dd>
+    <dt>المصدر</dt>
+    <dd>{source}</dd>
+    <dt>تاريخ الترجمة</dt>
+    <dd>
+      <time datetime={isoDate(translation_date)}>{isoDate(translation_date)}</time>
+    </dd>
+    {reviewer && (
+      <>
+        <dt>المراجع</dt>
+        <dd>{reviewer}</dd>
+      </>
+    )}
+  </dl>
+</footer>

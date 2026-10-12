@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getVisibleArticles } from '../lib/articles.ts';
+import { site } from '../config/site.ts';
+
+const articles = await getVisibleArticles();
+---
+
+<Base description={site.tagline_ar} isArticles>
+  <h1 class="page-title">{site.name}</h1>
+  <p class="lede">{site.tagline_ar}</p>
+
+  {
+    articles.length === 0 ? (
+      <p class="empty-note">لا توجد مقالات منشورة بعد. ستظهر هنا المقالة فور نشرها.</p>
+    ) : (
+      <ul class="article-list">
+        {articles.map((article) => (
+          <ArticleCard article={article} />
+        ))}
+      </ul>
+    )
+  }
+</Base>

@@ -1,0 +1,38 @@
+---
+import type { Article } from '../lib/articles.ts';
+import { isoDate } from '../lib/articles.ts';
+import { withBase } from '../config/site.ts';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const { title_ar, title_syr, author, work, summary_ar, tags, status, translation_date } =
+  article.data;
+const isPublished = status === 'published';
+const statusLabel = status === 'draft' ? 'مسودة' : 'روجعت';
+---
+
+<li>
+  <a class="article-card" href={withBase(`articles/${article.id}/`)}>
+    <h2 class="article-card__title">
+      {title_ar}
+      {!isPublished && <span class="status-badge">{statusLabel}</span>}
+    </h2>
+    <p class="article-card__meta">
+      <span>{author}</span>
+      <span>{work}</span>
+      <time datetime={isoDate(translation_date)}>{isoDate(translation_date)}</time>
+    </p>
+    {title_syr && <p class="article-card__meta" lang="syr" dir="rtl">{title_syr}</p>}
+    <p class="article-card__summary">{summary_ar}</p>
+    {tags.length > 0 && (
+      <ul class="article-card__tags">
+        {tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+    )}
+  </a>
+</li>

@@ -1,0 +1,23 @@
+{
+  "name": "meltho",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run test && astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check && tsc --noEmit",
+    "test": "node --test test/*.test.ts",
+    "fonts": "node scripts/fetch-fonts.mjs",
+    "og-image": "node scripts/build-og-image.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.4.0",
+    "marked": "^15.0.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/node": "^26.6.5",
+    "typescript": "^5.7.3"
+  }
+}

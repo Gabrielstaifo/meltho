@@ -1,0 +1,58 @@
+---
+import type { Article } from '../lib/articles.ts';
+import { articleBody, isoDate } from '../lib/articles.ts';
+import { parsePairs } from '../lib/parsePairs.ts';
+import { paths } from '../config/site.ts';
+import Base from './Base.astro';
+import PairRow from '../components/PairRow.astro';
+import MetaFooter from '../components/MetaFooter.astro';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const { title_ar, title_syr, author, work, summary_ar, translation_date } = article.data;
+
+// Fails the build loudly if any pair is malformed.
+const pairs = parsePairs(articleBody(article), {
+  file: `src/content/articles/${article.id}.md`,
+});
+---
+
+<Base
+  title={title_ar}
+  description={summary_ar}
+  type="article"
+  publishedTime={isoDate(translation_date)}
+>
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">
+        {title_ar}
+        {title_syr && <span class="article-title__syr" lang="syr" dir="rtl">{title_syr}</span>}
+      </h1>
+      <p class="article-byline">{author} — {work}</p>
+      <p class="article-summary">{summary_ar}</p>
+    </header>
+
+    <section aria-labelledby="text-heading">
+      <h2 class="section-heading" id="text-heading">النص السرياني والترجمة العربية</h2>
+
+      {pairs.length > 0 && (
+        <div class="pair-heads">
+          <span>السريانية</span>
+          <span>العربية</span>
+        </div>
+      )}
+
+      {pairs.map((pair, index) => (
+        <PairRow pair={pair} index={index + 1} />
+      ))}
+    </section>
+
+    <MetaFooter article={article} />
+
+    <a class="back-link" href={paths.home}>← كل المقالات</a>
+  </article>
+</Base>

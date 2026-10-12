@@ -1,0 +1,16 @@
+---
+import type { Pair } from '../lib/parsePairs.ts';
+
+interface Props {
+  pair: Pair;
+  /** 1-based position of the pair inside the article. */
+  index: number;
+}
+
+const { pair, index } = Astro.props;
+---
+
+<div class="pair" data-pair={index}>
+  <p class="cell cell--syr" lang="syr" dir="rtl" set:html={pair.syr} />
+  <p class="cell cell--ar" lang="ar" set:html={pair.ar} />
+</div>

@@ -1,0 +1,22 @@
+---
+import type { Article } from '../../lib/articles.ts';
+import { getVisibleArticles } from '../../lib/articles.ts';
+import ArticleLayout from '../../layouts/Article.astro';
+
+export async function getStaticPaths() {
+  const articles = await getVisibleArticles();
+
+  return articles.map((article) => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+---
+
+<ArticleLayout article={article} />
