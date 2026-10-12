@@ -127,3 +127,24 @@ test('renders inline italic by default', () => {
   assert.equal(pair.syr, '<em>ܐ.</em>');
   assert.equal(pair.ar, '<em>ب.</em>');
 });
+
+test('never "smarts" punctuation: quotes, dashes and dots are not typographically transformed', () => {
+  // Curly quotes, en/em dashes and ellipses would be a modification of the
+  // translator's text. Straight quotes are HTML-escaped for display (&quot;),
+  // which is safe; what must never appear is a "smartened" character.
+  const raw = 'قال "كذا" و-- أيضاً... انتهى';
+  const body = `${raw}\n\n${raw}`;
+
+  const [pair] = parsePairs(body);
+
+  for (const rendered of [pair.syr, pair.ar]) {
+    assert.ok(!rendered.includes('\u2018') && !rendered.includes('\u2019'), 'curly single quote');
+    assert.ok(!rendered.includes('\u201c') && !rendered.includes('\u201d'), 'curly double quote');
+    assert.ok(!rendered.includes('&ldquo;') && !rendered.includes('&rdquo;'), 'curly quote entity');
+    assert.ok(!rendered.includes('\u2013') && !rendered.includes('\u2014'), 'en/em dash');
+    assert.ok(!rendered.includes('\u2026'), 'ellipsis');
+    assert.ok(rendered.includes('--'), 'double hyphen preserved');
+    assert.ok(rendered.includes('...'), 'three dots preserved');
+    assert.ok(rendered.includes('&quot;') || rendered.includes('"'), 'straight quote preserved');
+  }
+});

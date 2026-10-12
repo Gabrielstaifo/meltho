@@ -1,20 +1,24 @@
 import { defineConfig } from 'astro/config';
+import { satteri } from '@astrojs/markdown-satteri';
 import { site } from './src/config/site.ts';
 
-// Host-agnostic: override with SITE_URL / BASE_PATH at build time.
-// Example for a GitHub Pages project site:
-//   SITE_URL=https://user.github.io BASE_PATH=/meltho/ npm run build
-const siteUrl = process.env.SITE_URL ?? site.url;
+// The domain is defined ONCE, in src/config/site.ts, and read from there here.
+// The only deploy-time override is the base path, which a sub-path host such as
+// a GitHub Pages project site needs:
+//   BASE_PATH=/meltho/ npm run build
+// For a custom domain, edit `url` in src/config/site.ts (one place).
 const base = process.env.BASE_PATH ?? '/';
 
 export default defineConfig({
-  site: siteUrl,
+  site: site.url,
   base,
   output: 'static',
   trailingSlash: 'ignore',
   markdown: {
-    // Never let Markdown "smarten" punctuation — article text is the translator's.
-    smartypants: false,
+    // Hard rule: the article text belongs to the translator. Smart punctuation
+    // (straight quotes -> curly quotes, -- -> en dash, ... -> ellipsis) is ON by
+    // default in Astro, so it must stay explicitly off.
+    processor: satteri({ features: { smartPunctuation: false } }),
   },
   build: {
     inlineStylesheets: 'auto',
