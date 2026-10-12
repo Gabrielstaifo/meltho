@@ -1,13 +1,13 @@
 ---
 title_ar: مقالة نموذجية (نص مؤقت لا يصلح للنشر)
 title_syr: ܟܰܕ ܩܳܝܡܳܐ
-author: اسم الأب (نموذج)
+author_slug: sample
 work: اسم العمل الأصلي (نموذج)
 source: الطبعة أو المخطوطة (نموذج)
 translator: اسم المترجم (نموذج)
 translation_date: 2026-10-12
 status: published
-tags: [نموذج]
+tags: [sample]
 summary_ar: مقالة نموذجية للتجربة فقط. النص فيها مؤقت ومكتوب بوضوح لبيان شكل التخطيط، ولا يُنشر.
 ---
 

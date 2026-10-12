@@ -1,0 +1,25 @@
+---
+import { tagLabel } from '../config/tags.ts';
+import { tagPath } from '../config/site.ts';
+
+interface Props {
+  /** Tag slugs (keys of `src/config/tags.ts`). */
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+{
+  tags.length > 0 && (
+    <ul class="tag-list">
+      {tags.map((slug) => (
+        <li>
+          <a class="tag-chip" href={tagPath(slug)}>
+            {tagLabel(slug)}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

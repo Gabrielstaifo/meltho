@@ -21,6 +21,8 @@ export const site = {
 export const paths = {
   home: '/',
   about: '/about/',
+  fathers: '/fathers/',
+  tags: '/tags/',
 } as const;
 
 /**
@@ -30,6 +32,21 @@ export const paths = {
 export function withBase(path: string): string {
   const base = import.meta.env.BASE_URL ?? '/';
   return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+}
+
+/** Public URL of an article page. */
+export function articlePath(id: string): string {
+  return withBase(`articles/${id}/`);
+}
+
+/** Public URL of a father's category page. */
+export function fatherPath(slug: string): string {
+  return withBase(`fathers/${slug}/`);
+}
+
+/** Public URL of a tag page. */
+export function tagPath(slug: string): string {
+  return withBase(`tags/${slug}/`);
 }
 
 /** Absolute URL for canonical links, Open Graph tags, the sitemap and robots.txt. */

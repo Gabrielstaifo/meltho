@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getVisibleArticles } from '../../lib/articles.ts';
+import { groupByFather } from '../../lib/taxonomy.ts';
+import { fatherPath, site } from '../../config/site.ts';
+
+const groups = groupByFather(await getVisibleArticles());
+---
+
+<Base title="الآباء" description={site.tagline_ar} isFathers>
+  <h1 class="page-title">الآباء</h1>
+
+  {
+    groups.length === 0 ? (
+      <p class="empty-note">لا توجد مقالات منشورة بعد.</p>
+    ) : (
+      <ul class="term-list">
+        {groups.map((group) => (
+          <li>
+            <a class="term-card" href={fatherPath(group.slug)}>
+              <span class="term-card__name">{group.father.name_ar}</span>
+              <span class="term-card__count">({group.articles.length})</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>

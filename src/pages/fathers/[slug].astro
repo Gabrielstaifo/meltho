@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getVisibleArticles } from '../../lib/articles.ts';
+import { groupByFather } from '../../lib/taxonomy.ts';
+import { site } from '../../config/site.ts';
+
+export async function getStaticPaths() {
+  const groups = groupByFather(await getVisibleArticles());
+
+  return groups.map((group) => ({
+    params: { slug: group.slug },
+    props: { group },
+  }));
+}
+
+type Props = Awaited<ReturnType<typeof getStaticPaths>>[number]['props'];
+
+const { group } = Astro.props;
+const { father, articles } = group;
+---
+
+<Base title={father.name_ar} description={site.tagline_ar} isFathers>
+  <h1 class="page-title">{father.name_ar}</h1>
+  {father.dates_ar && <p class="lede">{father.dates_ar}</p>}
+  {father.bio_ar && <p class="lede">{father.bio_ar}</p>}
+
+  <ul class="article-list">
+    {articles.map((article) => (
+      <ArticleCard article={article} />
+    ))}
+  </ul>
+</Base>

@@ -1,13 +1,20 @@
 import type { APIRoute } from 'astro';
 import { getVisibleArticles, isoDate } from '../lib/articles.ts';
-import { absoluteUrl } from '../config/site.ts';
+import { groupByFather, groupByTag } from '../lib/taxonomy.ts';
+import { absoluteUrl, paths } from '../config/site.ts';
 
 export const GET: APIRoute = async () => {
   const articles = await getVisibleArticles();
+  const fathers = groupByFather(articles);
+  const tags = groupByTag(articles);
 
   const entries: { loc: string; lastmod?: string }[] = [
     { loc: absoluteUrl('/') },
-    { loc: absoluteUrl('/about/') },
+    { loc: absoluteUrl(paths.about) },
+    { loc: absoluteUrl(paths.fathers) },
+    { loc: absoluteUrl(paths.tags) },
+    ...fathers.map((group) => ({ loc: absoluteUrl(`/fathers/${group.slug}/`) })),
+    ...tags.map((group) => ({ loc: absoluteUrl(`/tags/${group.slug}/`) })),
     ...articles.map((article) => ({
       loc: absoluteUrl(`/articles/${article.id}/`),
       lastmod: isoDate(article.data.translation_date),

@@ -2,17 +2,19 @@
 import type { Article } from '../lib/articles.ts';
 import { articleBody, isoDate } from '../lib/articles.ts';
 import { parsePairs } from '../lib/parsePairs.ts';
-import { paths } from '../config/site.ts';
+import { fatherPath, paths } from '../config/site.ts';
+import { fatherName } from '../config/fathers.ts';
 import Base from './Base.astro';
 import PairRow from '../components/PairRow.astro';
 import MetaFooter from '../components/MetaFooter.astro';
+import TagList from '../components/TagList.astro';
 
 interface Props {
   article: Article;
 }
 
 const { article } = Astro.props;
-const { title_ar, title_syr, author, work, summary_ar, translation_date } = article.data;
+const { title_ar, title_syr, author_slug, work, summary_ar, tags, translation_date } = article.data;
 
 // Fails the build loudly if any pair is malformed.
 const pairs = parsePairs(articleBody(article), {
@@ -32,8 +34,11 @@ const pairs = parsePairs(articleBody(article), {
         <span class="article-title__syr" lang="syr" dir="rtl">{title_syr}</span>
         <span class="article-title__ar" lang="ar">{title_ar}</span>
       </h1>
-      <p class="article-byline">{author} — {work}</p>
+      <p class="article-byline">
+        <a href={fatherPath(author_slug)}>{fatherName(author_slug)}</a> — {work}
+      </p>
       <p class="article-summary">{summary_ar}</p>
+      <TagList tags={tags} />
     </header>
 
     <section aria-labelledby="text-heading">

@@ -15,6 +15,10 @@ interface Props {
   /** True on the article index, so the nav item can be marked. */
   isArticles?: boolean;
   isAbout?: boolean;
+  /** True on a fathers page, so the nav item can be marked. */
+  isFathers?: boolean;
+  /** True on a tags page, so the nav item can be marked. */
+  isTags?: boolean;
 }
 
 const {
@@ -25,6 +29,8 @@ const {
   publishedTime,
   isArticles = false,
   isAbout = false,
+  isFathers = false,
+  isTags = false,
 } = Astro.props;
 
 const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline_ar}`;
@@ -97,6 +103,8 @@ const ogImage = absoluteUrl(image);
         </a>
         <nav class="site-nav" aria-label="التنقل الرئيسي">
           <a href={paths.home} aria-current={isArticles ? 'page' : undefined}>المقالات</a>
+          <a href={paths.fathers} aria-current={isFathers ? 'page' : undefined}>الآباء</a>
+          <a href={paths.tags} aria-current={isTags ? 'page' : undefined}>الوسوم</a>
           <a href={paths.about} aria-current={isAbout ? 'page' : undefined}>عن المشروع</a>
         </nav>
       </div>

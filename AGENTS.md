@@ -70,13 +70,15 @@ A broken build must fail loudly with a clear message (see §6 validation).
 ├── test/                        # unit tests for parsePairs and stripTatweel
 ├── prototype/parallel-text.html # design reference (§7 is the written equivalent)
 └── src/
-    ├── config/site.ts             # project name, taglines, URL (single source)
+    ├── config/site.ts             # project name, taglines, URL, paths (single source)
+    ├── config/fathers.ts          # Church Fathers registry: slug -> Arabic name
+    ├── config/tags.ts             # tag registry: slug -> Arabic label
     ├── content.config.ts          # collection schema
     ├── content/articles/*.md      # one file per article
-    ├── components/                # PairRow, ArticleCard, MetaFooter, ...
+    ├── components/                # PairRow, ArticleCard, TagList, MetaFooter, ...
     ├── layouts/                   # Base.astro (head, OG tags), Article.astro
-    ├── lib/                       # parsePairs, stripTatweel, articles helpers
-    ├── pages/                     # index, articles/[...id], about, 404, sitemap.xml, robots.txt
+    ├── lib/                       # parsePairs, stripTatweel, articles, taxonomy helpers
+    ├── pages/                     # index, articles/[...id], fathers/, tags/, about, 404, sitemap.xml, robots.txt
     └── styles/                    # global.css (tokens + layout), fonts.css + syriac-fonts.css (generated)
 ```
 
@@ -90,17 +92,21 @@ Each article is one Markdown file in `src/content/articles/<slug>.md`.
 |---|---|---|
 | `title_ar` | string | yes |
 | `title_syr` | string (Syriac title; becomes the article headline) | yes |
-| `author` | string (Father's name) | yes |
+| `author_slug` | string (key of `src/config/fathers.ts`) | yes |
 | `work` | string (original work) | yes |
 | `source` | string (edition/manuscript/URL) | yes |
 | `translator` | string | yes |
 | `translation_date` | date | yes |
 | `reviewer` | string | no |
 | `status` | `draft` \| `reviewed` \| `published` | yes |
-| `tags` | string[] | no (default `[]`) |
+| `tags` | string[] (keys of `src/config/tags.ts`) | no (default `[]`) |
 | `summary_ar` | string | yes |
 
 Only `status: published` articles appear on the public index and in the production build; `draft` and `reviewed` are visible in dev only.
+
+### Fathers and tags
+
+A father's Arabic name lives in `src/config/fathers.ts` (never in the article); a tag's Arabic label lives in `src/config/tags.ts`. Articles refer to them by slug only. Unknown slugs fail the build with the offending file and the list of known values. Each father with at least one visible article gets `/fathers/<slug>/`, and each used tag `/tags/<slug>/`; the hubs are `/fathers/` and `/tags/`.
 
 ### Body format
 
