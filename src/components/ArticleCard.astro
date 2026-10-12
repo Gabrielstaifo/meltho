@@ -25,7 +25,7 @@ const statusLabel = status === 'draft' ? 'مسودة' : 'روجعت';
       <span>{work}</span>
       <time datetime={isoDate(translation_date)}>{isoDate(translation_date)}</time>
     </p>
-    {title_syr && <p class="article-card__meta" lang="syr" dir="rtl">{title_syr}</p>}
+    {title_syr && <p class="article-card__syr" lang="syr" dir="rtl">{title_syr}</p>}
     <p class="article-card__summary">{summary_ar}</p>
     {tags.length > 0 && (
       <ul class="article-card__tags">

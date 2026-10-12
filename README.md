@@ -6,13 +6,14 @@
 - `npm run dev` — معاينة محلية (تظهر فيها المسودات أيضاً).
 - `npm run build` — التحقق ثم بناء الموقع للنشر.
 - `npm run preview` — معاينة الموقع المبني.
+- `npm run syriac-fonts` — إعادة توليد خطوط السريانية (نادراً ما يُحتاج).
 
 ## إضافة مقالة جديدة
 
 كل مقالة **ملف Markdown واحد** في `src/content/articles/`، ولا تحتاج تعديل أي كود. الفهرس و`sitemap` ووسوم المشاركة تُحدَّث تلقائياً.
 
 1. **اسم الملف** لاتيني قصير بحروف صغيرة وشرطات، مثل `ephrem-faith-01.md`. اسم الملف يصبح الرابط: `/articles/ephrem-faith-01/`.
-2. **املأ البيانات الوصفية** (القالب أدناه). الحقول المطلوبة: `title_ar` و`author` و`work` و`source` و`translator` و`translation_date` و`status` و`summary_ar`.
+2. **املأ البيانات الوصفية** (القالب أدناه). الحقول المطلوبة: `title_ar` و`title_syr` و`author` و`work` و`source` و`translator` و`translation_date` و`status` و`summary_ar`. العنوان السرياني (`title_syr`) يظهر عنواناً رئيسياً للصفحة بخط Serto Malankara.
 3. **اكتب المتن** أزواجاً: فقرة سريانية، سطر فارغ، الفقرة العربية؛ وبين كل زوجين سطر فيه `===` فقط.
 4. **راجع:** `npm run dev`.
 5. **انشر:** اجعل `status: published`. المسودات (`draft` أو `reviewed`) لا تظهر في الموقع المنشور.

@@ -29,8 +29,8 @@ const pairs = parsePairs(articleBody(article), {
   <article>
     <header class="article-header">
       <h1 class="article-title">
-        {title_ar}
-        {title_syr && <span class="article-title__syr" lang="syr" dir="rtl">{title_syr}</span>}
+        <span class="article-title__syr" lang="syr" dir="rtl">{title_syr}</span>
+        <span class="article-title__ar" lang="ar">{title_ar}</span>
       </h1>
       <p class="article-byline">{author} — {work}</p>
       <p class="article-summary">{summary_ar}</p>

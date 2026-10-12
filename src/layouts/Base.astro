@@ -1,6 +1,7 @@
 ---
 import { absoluteUrl, paths, site, withBase } from '../config/site.ts';
 import '../styles/fonts.css';
+import '../styles/syriac-fonts.css';
 import '../styles/global.css';
 
 interface Props {
@@ -73,7 +74,7 @@ const ogImage = absoluteUrl(image);
       rel="preload"
       as="font"
       type="font/woff2"
-      href={withBase('fonts/noto-sans-syriac-400-syriac.woff2')}
+      href={withBase('fonts/serto-urhoy-400.woff2')}
       crossorigin
     />
     <link

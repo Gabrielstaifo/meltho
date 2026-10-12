@@ -28,7 +28,7 @@ A working visual prototype is in `prototype/parallel-text.html`. It is the desig
 - **Markdown** content via Astro **Content Collections** with a Zod schema
 - Plain **CSS** with custom properties (no Tailwind, no UI framework)
 - **marked** (or equivalent) only for inline Markdown inside paragraphs (`**bold**`, `*italic*`)
-- Fonts self-hosted in `public/fonts/`: **Amiri** (Arabic), **Noto Sans Syriac** (Syriac). Provide `font-display: swap` and sensible fallbacks. Check whether *Noto Sans Syriac Western* (Serto style) is available under an open licence; if so, propose it to the owner rather than switching silently.
+- Fonts self-hosted in `public/fonts/`, all woff2: **Amiri** (Arabic) and the Meltho (SyrCOM) Syriac fonts — **Serto Urhoy** (article body) and **Serto Malankara** (titles). Provide `font-display: swap` and sensible fallbacks. The Meltho fonts are free to redistribute but their licence forbids modifying glyph designs, so never subset or edit them; only the container is converted to woff2. See `assets/syriac-fonts/MELTHO-LICENSE.txt`, and keep the Beth Mardutho acknowledgement on the About page. (This replaces the earlier Noto Sans Syriac / "check Noto Sans Syriac Western" plan — the owner chose the Meltho fonts.)
 - Node LTS, npm
 - Hosting target: static host (GitHub Pages, Netlify or Cloudflare Pages). Keep the build host-agnostic; make `site`/`base` configurable in `astro.config.mjs`.
 
@@ -56,11 +56,12 @@ A broken build must fail loudly with a clear message (see §6 validation).
 ├── tsconfig.json
 ├── astro.config.mjs
 ├── public/
-│   ├── fonts/                   # self-hosted Amiri + Noto Sans Syriac (woff2)
+│   ├── fonts/                   # self-hosted Amiri + Meltho Syriac fonts (woff2)
 │   ├── favicon.svg
 │   └── og-default.png           # default social preview, 1200x630
 ├── scripts/                     # helpers run by hand, not part of the build
-│   ├── fetch-fonts.mjs          # re-downloads the fonts, regenerates src/styles/fonts.css
+│   ├── fetch-fonts.mjs          # re-downloads Amiri, regenerates src/styles/fonts.css
+│   ├── build-syriac-fonts.mjs   # converts the Meltho fonts to woff2, regenerates src/styles/syriac-fonts.css
 │   ├── og-image.html            # source for the social preview image
 │   └── build-og-image.mjs       # renders public/og-default.png
 ├── test/                        # unit tests for parsePairs and stripTatweel
@@ -73,7 +74,7 @@ A broken build must fail loudly with a clear message (see §6 validation).
     ├── layouts/                   # Base.astro (head, OG tags), Article.astro
     ├── lib/                       # parsePairs, stripTatweel, articles helpers
     ├── pages/                     # index, articles/[...id], about, 404, sitemap.xml, robots.txt
-    └── styles/                    # global.css (tokens + layout), fonts.css (generated)
+    └── styles/                    # global.css (tokens + layout), fonts.css + syriac-fonts.css (generated)
 ```
 
 ## 6. Content format and validation
@@ -85,7 +86,7 @@ Each article is one Markdown file in `src/content/articles/<slug>.md`.
 | Field | Type | Required |
 |---|---|---|
 | `title_ar` | string | yes |
-| `title_syr` | string | no |
+| `title_syr` | string (Syriac title; becomes the article headline) | yes |
 | `author` | string (Father's name) | yes |
 | `work` | string (original work) | yes |
 | `source` | string (edition/manuscript/URL) | yes |
@@ -150,7 +151,7 @@ Theming: define tokens on `:root`; redefine under `@media (prefers-color-scheme:
 ### Typography
 
 - Arabic: `Amiri`, fallback `'Noto Naskh Arabic', serif`; ~1.3rem; `text-align: justify`; line-height ~2.
-- Syriac: `'Noto Sans Syriac'`, fallback `'Estrangelo Edessa', 'Serto Jerusalem', sans-serif`; ~1.2rem; `text-align: right`; line-height ~2.1.
+- Syriac body: `'Serto Urhoy'`, fallback `'Estrangelo Edessa', 'Serto Jerusalem', sans-serif`; titles/brand use `'Serto Malankara'` via `--font-syr-display`; ~1.2rem; `text-align: right`; line-height ~2.1.
 - Speaker labels such as **الكاهن:** / **ܟܗܢܐ:** are bold with `--acc`.
 
 ## 8. Language and RTL rules

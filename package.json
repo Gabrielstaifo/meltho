@@ -9,6 +9,7 @@
     "check": "astro check && tsc --noEmit",
     "test": "node --test test/*.test.ts",
     "fonts": "node scripts/fetch-fonts.mjs",
+    "syriac-fonts": "node scripts/build-syriac-fonts.mjs",
     "og-image": "node scripts/build-og-image.mjs"
   },
   "dependencies": {
