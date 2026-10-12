@@ -53,20 +53,27 @@ A broken build must fail loudly with a clear message (see §6 validation).
 ├── AGENTS.md
 ├── PROJECT.md
 ├── package.json
+├── tsconfig.json
 ├── astro.config.mjs
 ├── public/
-│   ├── fonts/
-│   └── favicon.svg
-├── prototype/parallel-text.html
+│   ├── fonts/                   # self-hosted Amiri + Noto Sans Syriac (woff2)
+│   ├── favicon.svg
+│   └── og-default.png           # default social preview, 1200x630
+├── scripts/                     # helpers run by hand, not part of the build
+│   ├── fetch-fonts.mjs          # re-downloads the fonts, regenerates src/styles/fonts.css
+│   ├── og-image.html            # source for the social preview image
+│   └── build-og-image.mjs       # renders public/og-default.png
+├── test/                        # unit tests for parsePairs and stripTatweel
+├── prototype/parallel-text.html # design reference (§7 is the written equivalent)
 └── src/
     ├── config/site.ts             # project name, taglines, URL (single source)
     ├── content.config.ts          # collection schema
     ├── content/articles/*.md      # one file per article
     ├── components/                # PairRow, ArticleCard, MetaFooter, ...
     ├── layouts/                   # Base.astro (head, OG tags), Article.astro
-    ├── lib/                       # parsePairs, stripTatweel, helpers
-    ├── pages/                     # index, articles/[slug], about
-    └── styles/global.css          # tokens + layout
+    ├── lib/                       # parsePairs, stripTatweel, articles helpers
+    ├── pages/                     # index, articles/[...id], about, 404, sitemap.xml, robots.txt
+    └── styles/                    # global.css (tokens + layout), fonts.css (generated)
 ```
 
 ## 6. Content format and validation

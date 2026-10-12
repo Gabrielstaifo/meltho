@@ -147,21 +147,28 @@ summary_ar: ملخص قصير في سطر أو سطرين.
 ├── AGENTS.md
 ├── PROJECT.md
 ├── package.json
+├── tsconfig.json
 ├── astro.config.mjs
 ├── public/
-│   ├── fonts/
-│   └── favicon.svg
+│   ├── fonts/                   # الخطوط المستضافة ذاتياً (Amiri وNoto Sans Syriac)
+│   ├── favicon.svg
+│   └── og-default.png           # صورة المعاينة عند المشاركة (1200×630)
+├── scripts/                     # أدوات تُشغَّل يدوياً، وليست جزءاً من البناء
+│   ├── fetch-fonts.mjs          # تنزيل الخطوط وإعادة توليد src/styles/fonts.css
+│   ├── og-image.html            # مصدر صورة المعاينة
+│   └── build-og-image.mjs       # توليد public/og-default.png
+├── test/                        # اختبارات parsePairs وstripTatweel
 ├── prototype/
-│   └── parallel-text.html
+│   └── parallel-text.html       # النموذج البصري المرجعي (والبند 7 هو المقابل المكتوب)
 └── src/
+    ├── config/site.ts           # الاسم والوصف والنطاق (المصدر الوحيد)
     ├── content.config.ts
-    ├── config/site.ts
     ├── content/articles/
     ├── components/
     ├── layouts/
     ├── lib/
     ├── pages/
-    └── styles/
+    └── styles/                  # global.css (المتغيرات والتخطيط) وfonts.css (مولَّد تلقائياً)
 ```
 
 ## 10. خارطة الطريق
